@@ -1,9 +1,9 @@
 {
-	"name": "afterlogic/aurora-module-file-viewer-webclient-plugin",
+	"name": "afterlogic/aurora-module-file-webclient-viewer-plugin",
     	"version": "0.1.0",
     	"type": "aurora-module",
     	"dist": {
-               "url":"https://github.com/afterlogic/aurora-module-file-viewer-webclient-plugin/archive/master.zip",
+               "url":"https://github.com/afterlogic/aurora-module-webclient-file-viewer-plugin/archive/master.zip",
                 "type":"zip"
         },
 	"require": {

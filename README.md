@@ -1,1 +1,1 @@
-# aurora-module-file-viewer-webclient-plugin
+# aurora-module-webclient-file-viewer-plugin
