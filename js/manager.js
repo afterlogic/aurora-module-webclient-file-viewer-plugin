@@ -52,6 +52,7 @@ module.exports = function (oAppData) {
 						collection = [],
 						added = false
 					;
+					filesCollection([]);
 					oParams.View.filesCollection.subscribe(function(newValue) {
 					_.each(newValue, function(item){ 
 						added = false;
