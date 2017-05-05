@@ -1,5 +1,5 @@
 {
-	"name": "afterlogic/aurora-module-file-webclient-viewer-plugin",
+	"name": "afterlogic/aurora-module-webclient-file-viewer-plugin",
     	"version": "0.1.0",
     	"type": "aurora-module",
     	"dist": {
