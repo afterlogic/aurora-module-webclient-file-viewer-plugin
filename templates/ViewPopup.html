@@ -1,10 +1,8 @@
 <div class="popup" style="display: none;">
-	<div class="mask" data-bind="click: cancelPopup"></div>
+	<div class="mask" data-bind="click: onClose"></div>
 	<div class="popup_panel">
-		<span class="close" data-bind="click: cancelPopup"></span>
-		<div class="owl-carousel owl-theme" data-bind="foreach: files">
-			<span data-bind="html: htmlData"></span>
-		</div>		
+		<span class="close" data-bind="click: onClose"></span>
+		<div class="owl-carousel owl-theme"></div>		
 	</div>
 	<span class="helper"></span>
 </div>

@@ -29,14 +29,25 @@ module.exports = function (oAppData) {
 			ModulesManager.run('%ModuleName%', 'registerController', [function (item) { 
 				if (item.extension().match(/(jpg|jpeg|png|gif)$/i))
 				{
-					item.htmlData = ko.observable('<img src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' />');
+					item.htmlData = ko.observable('<img class="item" src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' />');
 					
 					return true;
 				}
 				else if (item.bIsLink && item.sLinkUrl.match(/(youtube.com|youtu.be)/i))
 				{
-					console.log(item.sLinkUrl);
 					item.htmlData = ko.observable('<a class="owl-video" href="' + item.sLinkUrl + '"></a>');
+
+					return true;
+				}
+				else if (item.extension().match(/(doc|docx|xls|xlsx)$/i))
+				{
+					item.htmlData = ko.observable('<iframe style="width: 100%; height: 100%; border: none;" class="item" src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' />');
+
+					return true;
+				}
+				else if (item.extension().match(/(txt)$/i))
+				{
+					item.htmlData = ko.observable('<iframe style="width: 100%; height: 100%; border: none;" class="item" src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' />');
 
 					return true;
 				}
@@ -45,15 +56,20 @@ module.exports = function (oAppData) {
 			}]);			
 			
 			App.subscribeEvent('AbstractFileModel::FileView::before', function (oParams) {
-				Popups.showPopup(ViewPopup, [filesCollection, oParams.index]);
+				if (_.find(filesCollection(), function(file){ 
+					return UrlUtils.getAppPath() + file.getActionUrl('view') === oParams.sUrl; 
+				}))
+				{
+					Popups.showPopup(ViewPopup, [filesCollection, oParams.index]);
+				}
 			});
 			App.subscribeEvent('FilesWebclient::ShowView::after', function (oParams) {
+				oParams.View.filesCollection.subscribe(function(newValue) {
 					var 
 						collection = [],
-						added = false
+						added = false,
+						index = 0
 					;
-					filesCollection([]);
-					oParams.View.filesCollection.subscribe(function(newValue) {
 					_.each(newValue, function(item){ 
 						added = false;
 						_.each(controllers, function(controller){ 
@@ -61,8 +77,10 @@ module.exports = function (oAppData) {
 							{
 								if (controller(item))
 								{
+									item.index(index);
 									collection.push(item);
 									added = true;
+									index++;
 								}
 							}
 						});
