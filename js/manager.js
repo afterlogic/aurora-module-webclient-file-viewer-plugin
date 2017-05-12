@@ -35,7 +35,7 @@ module.exports = function (oAppData) {
 				}
 				else if (item.bIsLink && item.sLinkUrl.match(/(youtube.com|youtu.be)/i))
 				{
-					item.htmlData = ko.observable('<a class="owl-video" href="' + item.sLinkUrl + '"></a>');
+					item.htmlData = ko.observable('<div class="item-video"><a class="owl-video" href="' + item.sLinkUrl + '"></a></div>');
 
 					return true;
 				}
