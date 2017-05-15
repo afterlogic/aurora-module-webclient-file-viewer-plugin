@@ -27,32 +27,40 @@ module.exports = function (oAppData) {
 			;
 			
 			ModulesManager.run('%ModuleName%', 'registerController', [function (item) { 
+				var 
+					bResult = false
+				;
 				if (item.extension().match(/(jpg|jpeg|png|gif)$/i))
 				{
 					item.htmlData = ko.observable('<img class="item" src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' />');
 					
-					return true;
+					bResult = true;
 				}
 				else if (item.bIsLink && item.sLinkUrl.match(/(youtube.com|youtu.be)/i))
 				{
 					item.htmlData = ko.observable('<div class="item-video"><a class="owl-video" href="' + item.sLinkUrl + '"></a></div>');
 
-					return true;
+					bResult = true;
 				}
 				else if (item.extension().match(/(doc|docx|xls|xlsx)$/i))
 				{
 					item.htmlData = ko.observable('<iframe style="width: 100%; height: 100%; border: none;" class="item" src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' />');
 
-					return true;
+					bResult = true;
 				}
 				else if (item.extension().match(/(txt)$/i))
 				{
 					item.htmlData = ko.observable('<iframe style="width: 100%; height: 100%; border: none;" class="item" src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' />');
 
-					return true;
+					bResult = true;
+				}
+				
+				if (bResult)
+				{
+					item.htmlData('<span>'+item.fileName()+'</span>' + item.htmlData());
 				}
 					
-				return false;
+				return bResult;
 			}]);			
 			
 			App.subscribeEvent('AbstractFileModel::FileView::before', function (oParams) {
