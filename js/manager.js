@@ -68,6 +68,7 @@ module.exports = function (oAppData) {
 					return UrlUtils.getAppPath() + file.getActionUrl('view') === oParams.sUrl; 
 				}))
 				{
+					oParams.bBreakView = true;
 					Popups.showPopup(ViewPopup, [filesCollection, oParams.index]);
 				}
 			});
