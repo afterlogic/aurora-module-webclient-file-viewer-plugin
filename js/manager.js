@@ -95,6 +95,7 @@ module.exports = function (oAppData) {
 						});
 					});
 					filesCollection(collection);
+					App.broadcastEvent('FileViewerWebclientPlugin::FilesCollection::after', {aFilesCollection: filesCollection});
 				});
 			});
 		},
