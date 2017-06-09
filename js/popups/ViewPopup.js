@@ -27,6 +27,10 @@ CViewPopup.prototype.PopupTemplate = '%ModuleName%_ViewPopup';
 
 CViewPopup.prototype.onShow = function (files, index)
 {
+	var
+		iIndex = 0,
+		oRealIndex = {}
+	;
 	this.files(files());
 	
 	$('.owl-carousel').owlCarousel({
@@ -36,8 +40,9 @@ CViewPopup.prototype.onShow = function (files, index)
 	});	
 	_.each(this.files(), function (file){
 		$('.owl-carousel').trigger('add.owl.carousel', [file.htmlData()]);
+		oRealIndex[file.index()] = iIndex++;
 	});
-	$('.owl-carousel').trigger('to.owl.carousel', [index]);
+	$('.owl-carousel').trigger('to.owl.carousel', [oRealIndex[index]]);
 	$('.owl-carousel').trigger('refresh.owl.carousel');
 	
 	_.defer(function () {
