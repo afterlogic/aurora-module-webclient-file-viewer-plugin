@@ -57,7 +57,7 @@ module.exports = function (oAppData) {
 				
 				if (bResult)
 				{
-					item.htmlData('<span>'+item.fileName()+'</span>' + item.htmlData());
+					item.htmlData('<div>'+item.fileName()+'</div>' + item.htmlData());
 				}
 					
 				return bResult;

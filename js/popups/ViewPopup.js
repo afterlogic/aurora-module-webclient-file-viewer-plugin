@@ -2,17 +2,12 @@
 
 require('owl.carousel/dist/assets/owl.carousel.css');
 require('owl.carousel/dist/assets/owl.theme.default.css');
-
-var
-	$ = require('jquery');
-	
-	window.jQuery = $;
+require('owl.carousel');
 
 var 
+	$ = require('jquery'),
 	_ = require('underscore'),
 	ko = require('knockout'),
-	owl_carousel = require('owl.carousel'),
-	
 	CAbstractPopup = require('%PathToCoreWebclientModule%/js/popups/CAbstractPopup.js')
 ;
 
@@ -44,6 +39,10 @@ CViewPopup.prototype.onShow = function (files, index)
 	});
 	$('.owl-carousel').trigger('to.owl.carousel', [index]);
 	$('.owl-carousel').trigger('refresh.owl.carousel');
+	
+	_.defer(function () {
+		$('.owl-carousel').trigger('refresh.owl.carousel');
+	});
 };
 
 CViewPopup.prototype.onClose = function ()
