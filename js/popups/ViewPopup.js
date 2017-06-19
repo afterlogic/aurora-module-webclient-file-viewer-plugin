@@ -1,13 +1,20 @@
 'use strict';
 
-require('owl.carousel/dist/assets/owl.carousel.css');
-require('owl.carousel/dist/assets/owl.theme.default.css');
-require('owl.carousel');
+require('modules/%ModuleName%/js/vendors/owl.carousel/assets/owl.carousel.css');
+require('modules/%ModuleName%/js/vendors/owl.carousel/assets/owl.theme.default.css');
+
+var
+	$ = require('jquery');
+	
+	window.jQuery = $;
 
 var 
 	$ = require('jquery'),
 	_ = require('underscore'),
 	ko = require('knockout'),
+	owl_carousel = require('modules/%ModuleName%/js/vendors/owl.carousel/owl.carousel.js'),
+
+	
 	CAbstractPopup = require('%PathToCoreWebclientModule%/js/popups/CAbstractPopup.js')
 ;
 
