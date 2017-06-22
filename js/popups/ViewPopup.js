@@ -43,7 +43,9 @@ CViewPopup.prototype.onShow = function (files, index)
 	$('.owl-carousel').owlCarousel({
 		items: 1,
 		nav: true,
-		video: true
+		dots: false,
+		video: true,
+		navText: ['<', '>']
 	});	
 	_.each(this.files(), function (file){
 		$('.owl-carousel').trigger('add.owl.carousel', [file.htmlData()]);
