@@ -1,7 +1,6 @@
 'use strict';
 
 var	
-	$ = require('jquery'),
 	_ = require('underscore'),
 	ko = require('knockout'),
 	
@@ -32,7 +31,7 @@ module.exports = function (oAppData) {
 				;
 				if (item.extension().match(/(jpg|jpeg|png|gif)$/i))
 				{
-					item.htmlData = ko.observable('<img class="item" src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' />');
+					item.htmlData = ko.observable('<div class="item-image"><img src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' /></div>');
 					
 					bResult = true;
 				}
@@ -57,7 +56,7 @@ module.exports = function (oAppData) {
 				
 				if (bResult)
 				{
-					item.htmlData('<div>'+item.fileName()+'</div>' + item.htmlData());
+					item.htmlData('<div class="title">'+item.fileName()+'</div>' + item.htmlData());
 				}
 					
 				return bResult;
