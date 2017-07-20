@@ -25,6 +25,16 @@
 			
 			.item-image {
 				max-height: 100%;
+				height: 100%;
+				overflow: hidden;
+				
+				div {
+					height: 100%;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+				}
 			}
 					
 			.item-video {
@@ -100,9 +110,9 @@
 	}
 	.owl-stage-outer {
 		height: 100%;
-		padding: 60px 0 0;
-		box-sizing: border-box;
-		margin-top: -60px;
+		//box-sizing: border-box;
+		//padding: 60px 0 0;
+		//margin-top: -60px;
 	}
 	.owl-stage {
 		height: 100%;
