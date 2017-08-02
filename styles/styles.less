@@ -9,7 +9,8 @@
 		height: 80%;
 		width: 80%;
 		max-width: 80%;
-		padding: 30px;
+		padding: 30px 110px;
+		.box-sizing();
 	}
 	.owl-carousel {
 		height: 100%;
@@ -52,6 +53,19 @@
 				color: #FFF;
 				padding-bottom: 10px;
 				font-size: 14pt;
+				overflow: hidden;
+				
+				white-space: normal;
+		
+				/* Careful, this breaks the word wherever it is without a hyphen */
+				overflow-wrap: break-word;
+				word-wrap: break-word;
+
+				/* Adds a hyphen where the word breaks */
+				-webkit-hyphens: auto;
+				-ms-hyphens: auto;
+				-moz-hyphens: auto;
+				hyphens: auto;
 			}
 		}
 		
@@ -81,8 +95,8 @@
 			}
 			
 			.owl-prev {
-				position: relative;
-				left: -30px;
+				position: absolute;
+				left: -110px;
 					
 				&:before {
 					content: "\e671";
@@ -90,9 +104,8 @@
 				}
 			}
 			.owl-next {
-				float: right;
-				position: relative;
-				right: -30px;
+				position: absolute;
+				right: -110px;
 				
 				&:before {
 					content: "\e670";
