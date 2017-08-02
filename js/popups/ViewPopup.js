@@ -20,6 +20,23 @@ function CViewPopup()
 	CAbstractPopup.call(this);
 	
 	this.files = ko.observableArray();
+	
+	$(document.documentElement).keyup(function (event) {    
+
+		var owl = jQuery(".owl-carousel");
+
+		if (event.keyCode === 37) 
+		{
+		   console.log(event.keyCode);
+		   owl.trigger('prev.owl.carousel');
+		} 
+		else if (event.keyCode === 39) 
+		{
+  		   console.log(event.keyCode);
+		   owl.trigger('next.owl.carousel');
+		}
+
+	});	
 }
 
 _.extendOwn(CViewPopup.prototype, CAbstractPopup.prototype);
@@ -39,7 +56,7 @@ CViewPopup.prototype.onShow = function (files, index)
 		nav: true,
 		dots: false,
 		video: true,
-		navText: ['<', '>'],
+		navText: ['', ''],
 		lazyLoad: true
 	});	
 	_.each(this.files(), function (file){
