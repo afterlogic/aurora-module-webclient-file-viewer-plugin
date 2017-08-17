@@ -35,7 +35,6 @@ function CViewPopup()
   		   console.log(event.keyCode);
 		   owl.trigger('next.owl.carousel');
 		}
-
 	});	
 }
 
@@ -47,7 +46,8 @@ CViewPopup.prototype.onShow = function (files, index)
 {
 	var
 		iIndex = 0,
-		oRealIndex = {}
+		oRealIndex = {},
+		self = this
 	;
 	this.files(files());
 	
@@ -68,6 +68,13 @@ CViewPopup.prototype.onShow = function (files, index)
 	
 	_.defer(function () {
 		$('.owl-carousel').trigger('refresh.owl.carousel');
+	});
+	
+	$('.popup_panel').click(function (event) {    
+		if (event.target.nodeName !== 'IMG' && event.target.nodeName !== 'IFRAME' && !event.target.classList.contains('owl-next') && !event.target.classList.contains('owl-prev'))
+		{
+			self.onClose();
+		}
 	});
 };
 
