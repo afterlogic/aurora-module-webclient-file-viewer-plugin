@@ -27,12 +27,10 @@ function CViewPopup()
 
 		if (event.keyCode === 37) 
 		{
-		   console.log(event.keyCode);
 		   owl.trigger('prev.owl.carousel');
 		} 
 		else if (event.keyCode === 39) 
 		{
-  		   console.log(event.keyCode);
 		   owl.trigger('next.owl.carousel');
 		}
 	});	
