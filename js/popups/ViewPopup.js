@@ -40,7 +40,7 @@ _.extendOwn(CViewPopup.prototype, CAbstractPopup.prototype);
 
 CViewPopup.prototype.PopupTemplate = '%ModuleName%_ViewPopup';
 
-CViewPopup.prototype.onShow = function (files, index)
+CViewPopup.prototype.onOpen = function (files, index)
 {
 	var
 		iIndex = 0,
@@ -71,12 +71,12 @@ CViewPopup.prototype.onShow = function (files, index)
 	$('.popup_panel').click(function (event) {    
 		if (event.target.nodeName !== 'IMG' && event.target.nodeName !== 'IFRAME' && !event.target.classList.contains('owl-next') && !event.target.classList.contains('owl-prev'))
 		{
-			self.onClose();
+			self.close();
 		}
 	});
 };
 
-CViewPopup.prototype.onClose = function ()
+CViewPopup.prototype.close = function ()
 {
 	_.each(this.files(), function (file){
 		$('.owl-carousel').trigger('remove.owl.carousel', [file.index()]);
