@@ -11,8 +11,6 @@
 		"afterlogic/aurora-framework": "~0.3"
 	},
 	"extra": {
-		"installer-name": "FileViewerWebclientPlugin",
-		"include-in-mobile": false,
-		"include-in-desktop": true
+		"installer-name": "FileViewerWebclientPlugin"
 	}
 }
