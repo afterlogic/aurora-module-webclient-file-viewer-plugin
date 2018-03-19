@@ -22,45 +22,44 @@ module.exports = function (oAppData) {
 		start: function (ModulesManager) {
 			
 			var 
-				filesCollection = ko.observableArray()
+				filesCollection = ko.observableArray(),
+				fillHtmlData = function(item) { 
+					var 
+						bResult = false
+					;
+					if (item.extension().match(/(jpg|jpeg|png|gif)$/i))
+					{
+						item.htmlData = ko.observable('<div class="item-image"><div><img src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' /></div></div>');
+
+						bResult = true;
+					}
+					else if (item.bIsLink && item.sLinkUrl.match(/(youtube.com|youtu.be)/i))
+					{
+						item.htmlData = ko.observable('<div class="item-video"><a class="owl-video" href="' + item.sLinkUrl + '"></a></div>');
+
+						bResult = true;
+					}
+					else if (item.extension().match(/(doc|docx|xls|xlsx)$/i))
+					{
+						item.htmlData = ko.observable('<iframe style="width: 100%; height: 100%; border: none;" class="item" src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' />');
+
+						bResult = true;
+					}
+					else if (item.extension().match(/(txt)$/i))
+					{
+						item.htmlData = ko.observable('<iframe style="width: 100%; height: 100%; border: none;" class="item" src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' />');
+
+						bResult = true;
+					}
+
+					if (bResult)
+					{
+						item.htmlData('<div class="title">'+item.fileName()+'</div>' + item.htmlData());
+					}
+
+					return bResult;				
+				}
 			;
-			
-			ModulesManager.run('%ModuleName%', 'registerController', [function (item) { 
-				var 
-					bResult = false
-				;
-				if (item.extension().match(/(jpg|jpeg|png|gif)$/i))
-				{
-					item.htmlData = ko.observable('<div class="item-image"><div><img src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' /></div></div>');
-					
-					bResult = true;
-				}
-				else if (item.bIsLink && item.sLinkUrl.match(/(youtube.com|youtu.be)/i))
-				{
-					item.htmlData = ko.observable('<div class="item-video"><a class="owl-video" href="' + item.sLinkUrl + '"></a></div>');
-
-					bResult = true;
-				}
-				else if (item.extension().match(/(doc|docx|xls|xlsx)$/i))
-				{
-					item.htmlData = ko.observable('<iframe style="width: 100%; height: 100%; border: none;" class="item" src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' />');
-
-					bResult = true;
-				}
-				else if (item.extension().match(/(txt)$/i))
-				{
-					item.htmlData = ko.observable('<iframe style="background: #fff; width: 100%; height: 100%; border: none;" class="item" src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' />');
-
-					bResult = true;
-				}
-				
-				if (bResult)
-				{
-					item.htmlData('<div class="title">'+item.fileName()+'</div>' + item.htmlData());
-				}
-					
-				return bResult;
-			}]);			
 			
 			App.subscribeEvent('AbstractFileModel::FileView::before', function (oParams) {
 				if (_.find(filesCollection(), function(file){ 
@@ -75,32 +74,20 @@ module.exports = function (oAppData) {
 				oParams.View.filesCollection.subscribe(function(newValue) {
 					var 
 						collection = [],
-						added = false,
 						index = 0
 					;
 					_.each(newValue, function(item){ 
-						added = false;
-						_.each(controllers, function(controller){ 
-							if (!added)
-							{
-								if (controller(item))
-								{
-									item.index(index);
-									collection.push(item);
-									added = true;
-									index++;
-								}
-							}
-						});
+						if (fillHtmlData(item))
+						{
+							item.index(index);
+							collection.push(item);
+							index++;
+						}
 					});
 					filesCollection(collection);
 					App.broadcastEvent('FileViewerWebclientPlugin::FilesCollection::after', {aFilesCollection: filesCollection});
 				});
 			});
-		},
-		registerController: function (fCallback)
-		{
-			controllers.push(fCallback);
 		}
 	};
 };
