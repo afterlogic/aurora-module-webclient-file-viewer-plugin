@@ -25,36 +25,32 @@ module.exports = function (oAppData) {
 				filesCollection = ko.observableArray(),
 				fillHtmlData = function(item) { 
 					var 
-						bResult = false
+						bResult = false,
+						sCommonHtmlData = '<div class="title">'+item.fileName()+'</div>';
 					;
 					if (item.extension().match(/(jpg|jpeg|png|gif)$/i))
 					{
-						item.htmlData = ko.observable('<div class="item-image"><div><img src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' /></div></div>');
+						item.htmlData = ko.observable(sCommonHtmlData + '<div class="item-image"><div><img src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' /></div></div>');
 
 						bResult = true;
 					}
 					else if (item.bIsLink && item.sLinkUrl.match(/(youtube.com|youtu.be)/i))
 					{
-						item.htmlData = ko.observable('<div class="item-video"><a class="owl-video" href="' + item.sLinkUrl + '"></a></div>');
+						item.htmlData = ko.observable(sCommonHtmlData + '<div class="item-video"><a class="owl-video" href="' + item.sLinkUrl + '"></a></div>');
 
 						bResult = true;
 					}
 					else if (item.extension().match(/(doc|docx|xls|xlsx)$/i))
 					{
-						item.htmlData = ko.observable('<iframe style="width: 100%; height: 100%; border: none;" class="item" src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' />');
+						item.htmlData = ko.observable(sCommonHtmlData + '<iframe style="width: 100%; height: 100%; border: none;" class="item" src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' />');
 
 						bResult = true;
 					}
 					else if (item.extension().match(/(txt)$/i))
 					{
-						item.htmlData = ko.observable('<iframe style="width: 100%; height: 100%; border: none;" class="item" src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' />');
+						item.htmlData = ko.observable(sCommonHtmlData + '<iframe style="width: 100%; height: 100%; border: none;" class="item" src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' />');
 
 						bResult = true;
-					}
-
-					if (bResult)
-					{
-						item.htmlData('<div class="title">'+item.fileName()+'</div>' + item.htmlData());
 					}
 
 					return bResult;				
@@ -70,7 +66,8 @@ module.exports = function (oAppData) {
 					Popups.showPopup(ViewPopup, [filesCollection, oParams.index]);
 				}
 			});
-			App.subscribeEvent('FilesWebclient::ShowView::after', function (oParams) {
+			
+			App.subscribeEvent('FilesWebclient::ConstructView::after', function (oParams) {
 				oParams.View.filesCollection.subscribe(function(newValue) {
 					var 
 						collection = [],
