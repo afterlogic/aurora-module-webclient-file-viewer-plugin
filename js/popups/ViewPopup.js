@@ -66,6 +66,7 @@ CViewPopup.prototype.onOpen = function (files, index)
 		iIndex++;
 	});
 	
+	$('.owl-carousel').trigger('refresh.owl.carousel');
 	_.defer(function () {
 		$('.owl-carousel').trigger('refresh.owl.carousel');
 	});
@@ -81,11 +82,10 @@ CViewPopup.prototype.onOpen = function (files, index)
 
 CViewPopup.prototype.close = function ()
 {
-	
-	_.each(this.files(), function (file){
-		$('.owl-carousel').trigger('remove.owl.carousel', [file.index()]);
-	});
-
+	for (var i=0; i<this.files().length; i++) {
+		$('.owl-carousel').trigger('remove.owl.carousel', [i]);
+	}
+	$('.owl-carousel').trigger('refresh.owl.carousel');
 	this.closePopup();
 };
 

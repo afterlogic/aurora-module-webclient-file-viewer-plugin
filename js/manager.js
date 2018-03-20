@@ -58,6 +58,10 @@ module.exports = function (oAppData) {
 			;
 			
 			ViewPopup.onClose = function (){
+				for (var i=0; i<filesCollection().length; i++) {
+					$('.owl-carousel').trigger('remove.owl.carousel', [i]);
+				}
+				$('.owl-carousel').trigger('refresh.owl.carousel');
 				if (selector)
 				{
 					selector.useKeyboardKeys(true);
