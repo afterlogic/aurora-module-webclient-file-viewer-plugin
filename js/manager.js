@@ -11,7 +11,6 @@ var
 ;
 
 module.exports = function (oAppData) {
-	var controllers = [];
 	
 	return {
 		/**
