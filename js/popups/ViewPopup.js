@@ -23,7 +23,7 @@ function CViewPopup()
 	
 	$(document.documentElement).keyup(function (event) {    
 
-		var owl = jQuery(".owl-carousel");
+		var owl = $(".owl-carousel");
 
 		if (event.keyCode === 37) 
 		{
@@ -44,10 +44,9 @@ CViewPopup.prototype.onOpen = function (files, index)
 {
 	var
 		iIndex = 0,
-		oRealIndex = {},
 		self = this
 	;
-	this.files(files());
+	this.files = files;
 	
 	$('.owl-carousel').owlCarousel({
 		items: 1,
@@ -57,19 +56,23 @@ CViewPopup.prototype.onOpen = function (files, index)
 		navText: ['', ''],
 		lazyLoad: true
 	});	
+	
 	_.each(this.files(), function (file){
 		$('.owl-carousel').trigger('add.owl.carousel', [file.htmlData()]);
-		oRealIndex[file.index()] = iIndex++;
+		if (file.index() === index)
+		{
+			$('.owl-carousel').trigger('to.owl.carousel', iIndex);
+		}
+		iIndex++;
 	});
-	$('.owl-carousel').trigger('to.owl.carousel', [oRealIndex[index]]);
-	$('.owl-carousel').trigger('refresh.owl.carousel');
 	
 	_.defer(function () {
 		$('.owl-carousel').trigger('refresh.owl.carousel');
 	});
 	
 	$('.popup_panel').click(function (event) {    
-		if (event.target.nodeName !== 'IMG' && event.target.nodeName !== 'IFRAME' && !event.target.classList.contains('owl-next') && !event.target.classList.contains('owl-prev'))
+		if (event.target.nodeName !== 'IMG' && event.target.nodeName !== 'IFRAME' && 
+				!event.target.classList.contains('owl-next') && !event.target.classList.contains('owl-prev'))
 		{
 			self.close();
 		}
@@ -78,9 +81,11 @@ CViewPopup.prototype.onOpen = function (files, index)
 
 CViewPopup.prototype.close = function ()
 {
+	
 	_.each(this.files(), function (file){
 		$('.owl-carousel').trigger('remove.owl.carousel', [file.index()]);
 	});
+
 	this.closePopup();
 };
 

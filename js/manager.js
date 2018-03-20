@@ -67,18 +67,18 @@ module.exports = function (oAppData) {
 			});
 			
 			App.subscribeEvent('FilesWebclient::ConstructView::after', function (oParams) {
-				oParams.View.filesCollection.subscribe(function(newValue) {
+				oParams.View.filesCollection.subscribe(function(newCollection) {
 					var 
 						collection = [],
 						index = 0
 					;
-					_.each(newValue, function(item){ 
+					_.each(newCollection, function(item){ 
+						item.index(index);
 						if (fillHtmlData(item))
 						{
-							item.index(index);
 							collection.push(item);
-							index++;
 						}
+						index++;
 					});
 					filesCollection(collection);
 					App.broadcastEvent('FileViewerWebclientPlugin::FilesCollection::after', {aFilesCollection: filesCollection});
