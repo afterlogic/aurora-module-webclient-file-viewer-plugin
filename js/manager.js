@@ -21,6 +21,7 @@ module.exports = function (oAppData) {
 		start: function (ModulesManager) {
 			
 			var 
+				selector = null,
 				filesCollection = ko.observableArray(),
 				fillHtmlData = function(item) { 
 					var 
@@ -56,17 +57,29 @@ module.exports = function (oAppData) {
 				}
 			;
 			
+			ViewPopup.onClose = function (){
+				if (selector)
+				{
+					selector.useKeyboardKeys(true);
+				}
+			};
+			
 			App.subscribeEvent('AbstractFileModel::FileView::before', function (oParams) {
 				if (_.find(filesCollection(), function(file){ 
 					return UrlUtils.getAppPath() + file.getActionUrl('view') === oParams.sUrl; 
 				}))
 				{
 					oParams.bBreakView = true;
+					if (selector)
+					{
+						selector.useKeyboardKeys(false);
+					}
 					Popups.showPopup(ViewPopup, [filesCollection, oParams.index]);
 				}
 			});
 			
 			App.subscribeEvent('FilesWebclient::ConstructView::after', function (oParams) {
+				selector = oParams.View.selector;
 				oParams.View.filesCollection.subscribe(function(newCollection) {
 					var 
 						collection = [],
