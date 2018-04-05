@@ -71,7 +71,7 @@ CViewPopup.prototype.onOpen = function (files, index)
 		$('.owl-carousel').trigger('refresh.owl.carousel');
 	});
 	
-	$('.popup_panel').click(function (event) {    
+	$('.popup_panel').click(function (event) { 
 		if (event.target.nodeName !== 'IMG' && event.target.nodeName !== 'IFRAME' && 
 				!event.target.classList.contains('owl-next') && !event.target.classList.contains('owl-prev'))
 		{
@@ -80,9 +80,15 @@ CViewPopup.prototype.onOpen = function (files, index)
 	});
 };
 
+CViewPopup.prototype.cancelPopup = function ()
+{
+	this.close();
+};
+
 CViewPopup.prototype.close = function ()
 {
-	for (var i=0; i<this.files().length; i++) {
+	for (var i=0; i<this.files().length; i++) 
+	{
 		$('.owl-carousel').trigger('remove.owl.carousel', [i]);
 	}
 	$('.owl-carousel').trigger('refresh.owl.carousel');
