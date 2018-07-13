@@ -48,7 +48,7 @@ module.exports = function (oAppData) {
 					}
 					else if (item.extension().match(/(txt)$/i))
 					{
-						item.htmlData = ko.observable(sCommonHtmlData + '<iframe style="width: 100%; height: 100%; border: none;" class="item" src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' />');
+						item.htmlData = ko.observable(sCommonHtmlData + '<iframe style="background: #fff; width: 100%; height: 100%; border: none;" class="item" src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' />');
 
 						bResult = true;
 					}
