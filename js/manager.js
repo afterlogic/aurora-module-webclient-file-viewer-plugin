@@ -30,7 +30,7 @@ module.exports = function (oAppData) {
 					;
 					if (item.extension().match(/(jpg|jpeg|png|gif)$/i))
 					{
-						item.htmlData = ko.observable(sCommonHtmlData + '<div class="item-image"><div><img src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' /></div></div>');
+						item.htmlData = ko.observable(sCommonHtmlData + '<div class="item-image"><div><img class="owl-lazy" data-src= ' + UrlUtils.getAppPath() + item.getActionUrl('view') + ' /></div></div>');
 
 						bResult = true;
 					}
