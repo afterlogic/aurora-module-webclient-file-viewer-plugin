@@ -54,10 +54,12 @@ CViewPopup.prototype.onOpen = function (files, index)
 		dots: false,
 		video: true,
 		navText: ['', ''],
-		lazyLoad: true
+		loop: true,
+		lazyLoad: true,
+		lazyLoadEager: 2
 	});	
 	
-	_.each(this.files(), function (file){
+	_.each(this.files(), function (file) {
 		$('.owl-carousel').trigger('add.owl.carousel', [file.htmlData()]);
 		if (file.index() === index)
 		{
@@ -66,7 +68,7 @@ CViewPopup.prototype.onOpen = function (files, index)
 		iIndex++;
 	});
 	
-	$('.owl-carousel').trigger('refresh.owl.carousel');
+//	$('.owl-carousel').trigger('refresh.owl.carousel');
 	_.defer(function () {
 		$('.owl-carousel').trigger('refresh.owl.carousel');
 	});
