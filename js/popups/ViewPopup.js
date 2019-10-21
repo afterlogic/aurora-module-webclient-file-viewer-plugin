@@ -54,7 +54,7 @@ CViewPopup.prototype.onOpen = function (files, index)
 		dots: false,
 		video: true,
 		navText: ['', ''],
-		loop: true,
+		loop: false,
 		lazyLoad: true,
 		lazyLoadEager: 2
 	});	
