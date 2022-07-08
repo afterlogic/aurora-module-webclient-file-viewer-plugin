@@ -69,11 +69,9 @@ module.exports = function (oAppData) {
 			};
 			
 			App.subscribeEvent('AbstractFileModel::FileView::before', function (oParams) {
-				if (_.find(filesCollection(), function(file){ 
-					return UrlUtils.getAppPath() + file.getActionUrl('view') === oParams.sUrl; 
-				}))
-				{
-					oParams.bBreakView = true;
+				const isFileInList = filesCollection().find(file => file.hash() === oParams.hash);
+				if (isFileInList) {
+					oParams.continueView = false;
 					if (selector)
 					{
 						selector.useKeyboardKeys(false);
